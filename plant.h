@@ -8,4 +8,4 @@ public:
     Plant();
 
     void move(int dx, int dy);
-}
+};

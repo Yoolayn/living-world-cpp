@@ -10,11 +10,11 @@ private:
     int worldX;
     int worldY;
     int turn = 0;
-    std::vector<Organism> organism;
-    char separator = ".";
+    std::vector<Organism> organisms;
+    char separator = '.';
 
     std::string getOrganismFromPosition(int x, int y);
-    bool isPositionWorld(int x, int y);
+    bool isPositionOnWorld(int x, int y);
     bool isPositionFree(Position position);
 public:
     World(int worldX, int worldY);
@@ -35,4 +35,4 @@ public:
     void readWorld(std::string filename);
 
     std::string toString();
-}
+};
