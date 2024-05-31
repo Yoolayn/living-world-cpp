@@ -39,9 +39,14 @@ std::string Position::toString()
 
 double Position::distance(Position position)
 {
+    return std::sqrt(Position::distance_sq(position));
+}
+
+double Position::distance_sq(Position position)
+{
     double dx = (double)this->getX() - (double)position.getX();
     double dy = (double)this->getY() - (double)position.getY();
-    return std::sqrt( (dx * dx) + (dy * dy) );
+    return (dx * dx) + (dy * dy);
 }
 
 void Position::move(int dx, int dy)

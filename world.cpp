@@ -66,7 +66,7 @@ std::vector<Position> World::getVectorOfFreePositionsAround(Position position)
                 isPositionOnWorld(pos_x + x, pos_y + y))
                  result.push_back(Position(pos_x + x, pos_y + y));
     auto iter = std::remove_if(result.begin(), result.end(),
-                          [this](Position pos) { return !isPositionFree(pos); });
+                               [this](Position pos) { return !isPositionFree(pos); });
     result.erase(iter, result.end());
 
     return result;
@@ -78,7 +78,7 @@ void World::makeTurn()
     int number_of_new_positions;
     int random_index;
 
-    srand(time(0));
+    srand(time(NULL));
     for (auto& org : organisms) {
         new_positions = getVectorOfFreePositionsAround(org.getPosition());
         number_of_new_positions = new_positions.size();

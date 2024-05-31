@@ -5,29 +5,12 @@
 #include "animal.h"
 #include "world.h"
 
-
 int main()
 {
 	// Position
 	Position p1;
 	Position p2{ 1, 1 };
 	Position p3{ -3, -5 };
-
-	//std::cout << p1.toString() << std::endl;
-	//std::cout << p2.toString() << std::endl;
-	//std::cout << p3.toString() << std::endl;
-	//std::cout << p1.distance(p2) << std::endl;
-	//p2.move(4, 6);
-	//std::cout << p2.toString() << std::endl;
-
-	// Organism
-	//Organism org1;
-	//Organism org2{ 10, p2 };
-
-	//std::cout << org1.toString() << std::endl;
-	//std::cout << org2.toString() << std::endl;
-	//org1.move(2, 3);
-	//std::cout << org1.toString() << std::endl;
 
 	// Plant & Animal
 	Plant plant{ 3, p3 };

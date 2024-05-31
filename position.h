@@ -19,5 +19,6 @@ public:
     std::string toString();
 
     double distance(Position position);
+    double distance_sq(Position position);
     void move(int dx, int dy);
 };
