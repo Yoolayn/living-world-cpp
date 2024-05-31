@@ -1,5 +1,5 @@
-#include "organism.h"
-#include "position.h"
+#include "organism.hpp"
+#include "position.hpp"
 
 Organism::Organism(int power, Position position)
 {

@@ -1,9 +1,10 @@
 #include <iostream>
-#include "position.h"
-#include "organism.h"
-#include "plant.h"
-#include "animal.h"
-#include "world.h"
+#include "position.hpp"
+#include "organism.hpp"
+#include "plant.hpp"
+#include "animal.hpp"
+#include "world.hpp"
+#include "record.hpp"
 
 int main()
 {

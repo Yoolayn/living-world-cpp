@@ -1,5 +1,5 @@
-#include "plant.h"
-#include "organism.h"
+#include "plant.hpp"
+#include "organism.hpp"
 
 Plant::Plant(int power, Position position) : Organism(power, position)
 {

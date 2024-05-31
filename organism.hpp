@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "position.h"
+#include "position.hpp"
 
 class Organism
 {

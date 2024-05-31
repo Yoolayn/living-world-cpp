@@ -1,4 +1,4 @@
-#include "animal.h"
+#include "animal.hpp"
 
 Animal::Animal(int power, Position position) : Organism::Organism(power, position)
 {
