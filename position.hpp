@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include <cmath>
-#include "record.hpp"
 
 class Position
 {
