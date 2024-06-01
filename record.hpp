@@ -1,18 +1,27 @@
 #pragma once
 #include <string>
+#include <vector>
 #include <optional>
 
 class Record
 {
 private:
-    int birth;
-    std::optional<int> death;
+    int birth_;
+    std::optional<int> death_;
+    std::vector<int> ancestors_;
 public:
     Record();
     Record(int birth);
     Record(int birth, int death);
-    void setDeath(int death);
-    std::string toString();
-    int getBirth();
-    std::optional<int> getDeath();
+    Record(int birth, std::vector<int> ancestors);
+    Record(int birth, int death, std::vector<int> ancestors);
+
+    operator std::string();
+
+    void death(int d) { death_ = std::optional(d); };
+    int birth() const { return birth_; };
+    std::optional<int> death() { return death_; };
+    std::vector<int> ancestors() { return ancestors_; };
+
+    void operator +=(const int& b); // add ancestors
 };

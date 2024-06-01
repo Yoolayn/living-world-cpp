@@ -25,7 +25,7 @@ $(BOOSTDIR)/: boost_1_85_0.tar.gz
 	tar xzf ./boost_1_85_0.tar.gz
 	@mv boost_1_85_0 $(BOOSTDIR)
 
-boost: boost/
+boost: $(BOOSTDIR)/
 
 clean:
 	rm -f $(OBJS)/*.o $(TARGET)

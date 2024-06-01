@@ -5,21 +5,21 @@
 class Organism
 {
 private:
-    int power;
-    Position position;
-    std::string species;
+    int power_;
+    Position position_;
+    std::string species_;
 public:
     Organism(int power, Position position);
-    Organism() : power(0), position(0, 0), species("O") {};
+    Organism() : power_(0), position_(0, 0), species_("O") {};
 
-    int getPower();
-    void setPower(int power);
-    Position getPosition();
-    void setPosition(Position position);
-    std::string getSpecies();
-    void setSpecies(std::string species);
+    int power() const { return power_; };
+    void power(int power) { power_ = power; };
+    Position position() const { return position_; };
+    void position(Position position) { position_ = position; };
+    std::string species() const { return species_; };
+    void species(std::string species) { species_ = species; };
 
-    std::string toString();
+    operator std::string();
 
     virtual void move(int dx, int dy);
 };

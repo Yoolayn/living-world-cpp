@@ -1,22 +1,23 @@
 #pragma once
 #include <string>
 #include <cmath>
+#include "record.hpp"
 
 class Position
 {
 private:
-    int x;
-    int y;
+    int x_;
+    int y_;
 public:
     Position(int x, int y);
-    Position() : x(0), y(0) {}
+    Position() : x_(0), y_(0) {}
 
-    int getX();
-    void setX(int x);
-    int getY();
-    void setY(int y);
+    int x() const { return x_; };
+    void x(int x) { x_ = x; };
+    int y() const { return y_; };
+    void y(int y) { y_ = y; };
 
-    std::string toString();
+    operator std::string();
 
     double distance(Position position);
     double distance_sq(Position position);

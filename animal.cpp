@@ -2,10 +2,10 @@
 
 Animal::Animal(int power, Position position) : Organism::Organism(power, position)
 {
-    setSpecies("A");
+    species("A");
 }
 
 Animal::Animal() : Organism::Organism()
 {
-    setSpecies("A");
+    species("A");
 }
