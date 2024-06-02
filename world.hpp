@@ -9,7 +9,7 @@ private:
     int worldX_;
     int worldY_;
     int turn_ = 0;
-    std::vector<Organism> organisms;
+    std::vector<Organism> organisms_;
     char separator = '.';
 
     std::string getOrganismFromPosition(int x, int y);

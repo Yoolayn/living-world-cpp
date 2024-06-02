@@ -1,9 +1,5 @@
 #include "record.hpp"
 
-Record::Record() {
-    birth_ = 0;
-}
-
 Record::Record(int birth)
 {
     birth_ = birth;

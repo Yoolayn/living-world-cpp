@@ -1,16 +1,15 @@
 #include "world.hpp"
-#include <algorithm>
 #include <fstream>
+#include <ranges>
 
-World::World(int worldX, int worldY)
+World::World(int worldX, int worldY) : worldX_(worldX), worldY_(worldY), turn_(0)
 {
-    worldX_ = worldX;
-    worldY_ = worldY;
+    organisms_ = std::vector<Organism>();
 }
 
 std::string World::getOrganismFromPosition(int x, int y)
 {
-    for (Organism org : this->organisms)
+    for (Organism org : this->organisms_)
         if (org.position().x() == x && org.position().y() == y)
             return org.species();
     return "";
@@ -28,23 +27,29 @@ bool World::isPositionFree(Position position)
 
 void World::addOrganism(Organism *organism)
 {
-    this->organisms.push_back(*organism);
+    this->organisms_.push_back(*organism);
 }
 
 std::vector<Position> World::getVectorOfFreePositionsAround(Position position)
 {
-    int pos_x = position.x(), pos_y = position.y();
-    std::vector<Position> result;
-    for (int x = -1; x < 2; ++x)
-        for (int y = -1; y < 2; ++y)
-            if ((x != 0 || y != 0) &&
-                isPositionOnWorld(pos_x + x, pos_y + y))
-                 result.push_back(Position(pos_x + x, pos_y + y));
-    auto iter = std::remove_if(result.begin(), result.end(),
-                               [this](Position pos) { return !isPositionFree(pos); });
-    result.erase(iter, result.end());
+    namespace pipe = std::views;
 
-    return result;
+    int pos_x = position.x(), pos_y = position.y();
+    auto positions = pipe::iota(-1, 2)
+        | pipe::transform([](int dx) {
+            return pipe::iota(-1, 2)
+                | pipe::transform([=](int dy) { return std::pair{dx, dy}; });
+        })
+        | pipe::join
+        | pipe::filter([](auto p) { return p.first != 0 || p.second != 0; })
+        | pipe::transform([&](std::pair<int, int> p) {
+            return Position(pos_x + p.first, pos_y + p.second);
+        })
+        | pipe::filter([this](Position pos) {
+            return isPositionOnWorld(pos.x(), pos.y()) && isPositionFree(pos);
+        })
+        | pipe::common;
+    return std::vector<Position>(positions.begin(), positions.end());
 }
 
 void World::makeTurn()
@@ -54,7 +59,7 @@ void World::makeTurn()
     int random_index;
 
     srand(time(NULL));
-    for (auto& org : organisms) {
+    for (auto& org : organisms_) {
         new_positions = getVectorOfFreePositionsAround(org.position());
         number_of_new_positions = new_positions.size();
         if (number_of_new_positions > 0) {
@@ -75,21 +80,21 @@ void World::writeWorld(std::string fileName)
 		my_file.write((char*)&this->worldY_, sizeof(int));
 		my_file.write((char*)&this->turn_, sizeof(int));
 
-		int orgs_size = this->organisms.size();
+		int orgs_size = this->organisms_.size();
 		my_file.write((char*)&orgs_size, sizeof(int));
 
 		for (int i = 0; i < orgs_size; i++) {
 			int data;
-			data = this->organisms[i].power();
+			data = this->organisms_[i].power();
 			my_file.write((char*)&data, sizeof(int));
 
-			data = this->organisms[i].position().x();
+			data = this->organisms_[i].position().x();
 			my_file.write((char*)&data, sizeof(int));
 
-			data = this->organisms[i].position().y();
+			data = this->organisms_[i].position().y();
 			my_file.write((char*)&data, sizeof(int));
 
-			std::string s_data = this->organisms[i].species();
+			std::string s_data = this->organisms_[i].species();
 			int s_size = s_data.size();
 
 			my_file.write((char*)&s_size, sizeof(int));
@@ -145,7 +150,7 @@ void World::readWorld(std::string fileName)
 			org.species(species);
 			new_organisms.push_back(org);
 		}
-		this->organisms = new_organisms;
+		this->organisms_ = new_organisms;
 		my_file.close();
 	}
 }

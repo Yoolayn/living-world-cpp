@@ -1,4 +1,4 @@
-CXX = g++
+CXX = clang++
 CXXFLAGS = -std=c++23 -Wall -Wextra -Werror -pedantic -O2
 SRCS = $(wildcard *.cpp)
 OBJDIR = build
@@ -16,7 +16,7 @@ $(OBJDIR)/%.o: %.cpp
 	@mkdir -p $(OBJDIR)
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-world: $(TARGET)
+all: $(TARGET)
 
 boost_1_85_0.tar.gz:
 	wget https://archives.boost.io/release/1.85.0/source/boost_1_85_0.tar.gz
@@ -30,4 +30,4 @@ boost: $(BOOSTDIR)/
 clean:
 	rm -f $(OBJS)/*.o $(TARGET)
 
-.PHONY: world clean boost
+.PHONY: all clean boost

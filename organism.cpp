@@ -19,3 +19,5 @@ void Organism::move(int dx, int dy)
 {
     position_.move(dx, dy);
 }
+
+Organism::~Organism() {}

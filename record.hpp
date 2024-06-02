@@ -10,7 +10,7 @@ private:
     std::optional<int> death_;
     std::vector<int> ancestors_;
 public:
-    Record();
+    Record() : birth_(0) {};
     Record(int birth);
     Record(int birth, int death);
     Record(int birth, std::vector<int> ancestors);

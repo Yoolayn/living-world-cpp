@@ -11,6 +11,7 @@ private:
 public:
     Organism(int power, Position position);
     Organism() : power_(0), position_(0, 0), species_("O") {};
+    virtual ~Organism();
 
     int power() const { return power_; };
     void power(int power) { power_ = power; };
