@@ -23,5 +23,13 @@ Historian::operator std::string()
     for (Record r : records_)
         ss << (std::string) r << std::endl;
 
-    return ss.str();
+    if (std::string s = ss.str(); s == ""s)
+        return "nothing"s;
+    else
+        return s;
+}
+
+std::ostream& operator<<(std::ostream& os, Historian h)
+{
+    return os << (std::string) h;
 }

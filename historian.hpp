@@ -1,4 +1,5 @@
 #include "record.hpp"
+#include <ostream>
 #include <vector>
 #include <optional>
 
@@ -8,10 +9,11 @@ private:
     std::vector<Record> records_;
 public:
     Historian() : records_() {};
-    // Record record(int index) { return records_[index]; };
     std::optional<Record> operator[](size_t index); // get a record
 
     void updateRecord(int index, Record record);
     int operator+=(Record record); // add a record
     operator std::string();
 };
+
+std::ostream& operator<<(std::ostream& os, Historian h);

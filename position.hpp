@@ -1,4 +1,5 @@
 #pragma once
+#include <ostream>
 #include <string>
 #include <cmath>
 
@@ -22,3 +23,5 @@ public:
     double distance_sq(Position position);
     void move(int dx, int dy);
 };
+
+std::ostream& operator<<(std::ostream& os, Position& p);

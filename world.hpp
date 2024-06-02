@@ -1,4 +1,5 @@
 #pragma once
+#include <ostream>
 #include <vector>
 #include <ctime>
 #include "organism.hpp"
@@ -26,7 +27,7 @@ public:
 
     int turn() const { return turn_; };
 
-    void addOrganism(Organism *organism);
+    void operator+=(Organism *organism);
     std::vector<Position> getVectorOfFreePositionsAround(Position position);
     void makeTurn();
 
@@ -35,3 +36,5 @@ public:
 
     operator std::string();
 };
+
+std::ostream& operator<<(std::ostream& os, World& w);

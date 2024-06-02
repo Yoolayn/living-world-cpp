@@ -21,3 +21,8 @@ void Organism::move(int dx, int dy)
 }
 
 Organism::~Organism() {}
+
+std::ostream& operator<<(std::ostream& os, Organism& o)
+{
+    return os << (std::string) o;
+}

@@ -1,4 +1,5 @@
 #pragma once
+#include <ostream>
 #include <string>
 #include "position.hpp"
 
@@ -24,3 +25,5 @@ public:
 
     virtual void move(int dx, int dy);
 };
+
+std::ostream& operator<<(std::ostream& os, Organism& o);

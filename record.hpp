@@ -25,3 +25,5 @@ public:
 
     void operator +=(const int& b); // add ancestors
 };
+
+std::ostream& operator<<(std::ostream& os, Record& r);

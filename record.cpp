@@ -36,3 +36,8 @@ void Record::operator+=(const int& rhs)
 {
     ancestors_.push_back(rhs);
 }
+
+std::ostream& operator<<(std::ostream& os, Record& r)
+{
+    return os << (std::string) r;
+}
