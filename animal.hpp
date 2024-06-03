@@ -3,7 +3,7 @@
 
 class Animal : public Organism
 {
-public:
+  public:
     Animal(int power, Position position);
     Animal();
 };

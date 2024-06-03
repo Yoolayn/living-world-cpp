@@ -3,12 +3,12 @@
 
 Plant::Plant(int power, Position position) : Organism(power, position)
 {
-    species("P");
+    species(plant);
 }
 
 Plant::Plant() : Organism()
 {
-    species("P");
+    species(plant);
 }
 
 void Plant::move(int dx, int dy)

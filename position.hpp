@@ -1,21 +1,34 @@
 #pragma once
+#include <cmath>
 #include <ostream>
 #include <string>
-#include <cmath>
 
 class Position
 {
-private:
+  private:
     int x_;
     int y_;
-public:
-    Position(int x, int y);
-    Position() : x_(0), y_(0) {}
 
-    int x() const { return x_; };
-    void x(int x) { x_ = x; };
-    int y() const { return y_; };
-    void y(int y) { y_ = y; };
+  public:
+    Position(int x, int y);
+    Position() : x_(0), y_(0){};
+
+    int x() const
+    {
+        return x_;
+    };
+    void x(int x)
+    {
+        x_ = x;
+    };
+    int y() const
+    {
+        return y_;
+    };
+    void y(int y)
+    {
+        y_ = y;
+    };
 
     operator std::string();
 
@@ -24,4 +37,4 @@ public:
     void move(int dx, int dy);
 };
 
-std::ostream& operator<<(std::ostream& os, Position& p);
+std::ostream &operator<<(std::ostream &os, Position &p);

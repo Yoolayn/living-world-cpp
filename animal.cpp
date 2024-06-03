@@ -1,11 +1,12 @@
 #include "animal.hpp"
 
-Animal::Animal(int power, Position position) : Organism::Organism(power, position)
+Animal::Animal(int power, Position position)
+    : Organism::Organism(power, position)
 {
-    species("A");
+    species(animal);
 }
 
 Animal::Animal() : Organism::Organism()
 {
-    species("A");
+    species(animal);
 }

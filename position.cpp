@@ -29,7 +29,7 @@ void Position::move(int dx, int dy)
     y(y() + dy);
 }
 
-std::ostream& operator<<(std::ostream& os, Position& p)
+std::ostream &operator<<(std::ostream &os, Position &p)
 {
-    return os << (std::string) p;
+    return os << (std::string)p;
 }

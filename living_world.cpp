@@ -1,13 +1,13 @@
+#include "animal.hpp"
 #include "boost/signals2/signal.hpp"
-#include <iostream>
-#include "position.hpp"
+#include "historian.hpp"
 #include "organism.hpp"
 #include "plant.hpp"
-#include "animal.hpp"
-#include "world.hpp"
-#include "historian.hpp"
+#include "position.hpp"
 #include "record.hpp"
 #include "todo.hpp"
+#include "world.hpp"
+#include <iostream>
 
 int main()
 {

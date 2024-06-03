@@ -3,7 +3,7 @@
 
 class Plant : public Organism
 {
-public:
+  public:
     Plant(int power, Position position);
     Plant();
 

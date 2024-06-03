@@ -1,16 +1,17 @@
 #pragma once
+#include <optional>
 #include <string>
 #include <vector>
-#include <optional>
 
 class Record
 {
-private:
+  private:
     int birth_;
     std::optional<int> death_;
     std::vector<int> ancestors_;
-public:
-    Record() : birth_(0) {};
+
+  public:
+    Record() : birth_(0){};
     Record(int birth);
     Record(int birth, int death);
     Record(int birth, std::vector<int> ancestors);
@@ -18,12 +19,24 @@ public:
 
     operator std::string();
 
-    void death(int d) { death_ = std::optional(d); };
-    int birth() const { return birth_; };
-    std::optional<int> death() { return death_; };
-    std::vector<int> ancestors() { return ancestors_; };
+    void death(int d)
+    {
+        death_ = std::optional(d);
+    };
+    int birth() const
+    {
+        return birth_;
+    };
+    std::optional<int> death()
+    {
+        return death_;
+    };
+    std::vector<int> ancestors()
+    {
+        return ancestors_;
+    };
 
-    void operator +=(const int& b); // add ancestors
+    void operator+=(const int &b); // add ancestors
 };
 
-std::ostream& operator<<(std::ostream& os, Record& r);
+std::ostream &operator<<(std::ostream &os, Record &r);

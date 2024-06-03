@@ -29,15 +29,16 @@ Record::operator std::string()
     auto d = death_;
     std::string d_str = (d) ? std::to_string(d.value()) : "not dead yet";
 
-    return "date of birth: " + std::to_string(birth_) + ", date of death: " + d_str;
+    return "date of birth: " + std::to_string(birth_) +
+           ", date of death: " + d_str;
 }
 
-void Record::operator+=(const int& rhs)
+void Record::operator+=(const int &rhs)
 {
     ancestors_.push_back(rhs);
 }
 
-std::ostream& operator<<(std::ostream& os, Record& r)
+std::ostream &operator<<(std::ostream &os, Record &r)
 {
-    return os << (std::string) r;
+    return os << (std::string)r;
 }
