@@ -1,9 +1,9 @@
 #include "world.hpp"
 #include "organism.hpp"
 #include "todo.hpp"
-#include <fstream>
 #include <iostream>
 #include <ranges>
+// #include <fstream>
 
 World::World(int worldX, int worldY) : worldX_(worldX), worldY_(worldY), turn_(0)
 {
@@ -28,30 +28,41 @@ bool World::isPositionFree(Position position)
     return this->getOrganismFromPosition(position.x(), position.y()).empty();
 }
 
-void World::operator+=(Organism *organism)
+void World::operator+=(Organism organism)
 {
-    organisms_.push_back(*organism);
+    organisms_.push_back(organism);
 }
 
-std::vector<Position> World::getVectorOfFreePositionsAround(Position position)
+consteval auto offsets()
 {
     namespace pipe = std::views;
 
-    int pos_x = position.x(), pos_y = position.y();
     auto positions = pipe::iota(-1, 2)
         | pipe::transform([](int dx) {
             return pipe::iota(-1, 2)
                 | pipe::transform([=](int dy) { return std::pair{dx, dy}; });
         })
-        | pipe::join
+        | pipe::join;
+
+    return positions;
+}
+
+std::vector<Position> World::getVectorOfPositionsAround(Position position)
+{
+    namespace pipe = std::views;
+
+    int pos_x = position.x(), pos_y = position.y();
+
+    auto positions = offsets()
         | pipe::filter([](auto p) { return p.first != 0 || p.second != 0; })
         | pipe::transform([&](std::pair<int, int> p) {
             return Position(pos_x + p.first, pos_y + p.second);
         })
         | pipe::filter([this](Position pos) {
-            return isPositionOnWorld(pos.x(), pos.y()) && isPositionFree(pos);
+            return isPositionOnWorld(pos.x(), pos.y());
         })
         | pipe::common;
+
     return std::vector<Position>(positions.begin(), positions.end());
 }
 
@@ -63,14 +74,16 @@ void World::makeTurn()
 
     srand(time(NULL));
     for (auto& org : organisms_) {
-        new_positions = getVectorOfFreePositionsAround(org.position());
-        number_of_new_positions = new_positions.size();
-        if (number_of_new_positions > 0) {
-            random_index = rand() % number_of_new_positions;
-            org.position(new_positions[random_index]);
-        }
+        new_positions = getVectorOfPositionsAround(org.position());
+        random_index = rand() % new_positions.size();
+        org.position(new_positions[random_index]);
     }
     turn_++;
+}
+
+void World::operator()()
+{
+    makeTurn();
 }
 
 void World::writeWorld(std::string fileName)

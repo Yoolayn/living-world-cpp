@@ -12,5 +12,23 @@
 int main()
 {
     TODO("make code work");
-    World w{};
+    TODO("🤓");
+
+    World world{};
+    world += Animal{10, Position{1, 2}};
+    world += Animal{10, Position{2, 2}};
+    world += Animal{10, Position{3, 3}};
+    world += Animal{10, Position{4, 3}};
+
+    world();
+    std::cout << world;
+
+    world();
+    std::cout << world;
+
+    world();
+    std::cout << world;
+
+    world();
+    std::cout << world;
 }

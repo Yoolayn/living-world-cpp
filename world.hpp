@@ -24,12 +24,13 @@ public:
     void worldX(int x) { worldX_ = x; };
     int worldY() const { return worldY_; };
     void worldY(int y) { worldY_ = y; };
-
     int turn() const { return turn_; };
 
-    void operator+=(Organism *organism);
-    std::vector<Position> getVectorOfFreePositionsAround(Position position);
+    std::vector<Position> getVectorOfPositionsAround(Position position);
     void makeTurn();
+
+    void operator()(); // void makeTurn()
+    void operator+=(Organism organism);
 
     void writeWorld(std::string filename);
     void readWorld(std::string filename);
