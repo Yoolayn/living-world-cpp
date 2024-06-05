@@ -1,7 +1,7 @@
 #pragma once
 
-#define TODO1(str) std::cout << "TODO: " << str << std::endl
-#define TODO0() std::cout << "TODO" << std::endl
+#define TODO1(str) std::cerr << __FILE__ << ":" << __LINE__ << ":TODO -> " << str << std::endl
+#define TODO0() std::cerr << __FILE__ << ":" << __LINE__ << ":TODO" << std::endl
 
 #define GET_MACRO(_0, NAME, ...) NAME
 #define TODO(...)                                                              \
