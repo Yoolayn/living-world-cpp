@@ -2,7 +2,7 @@ AlignTrailingComments: true
 AllowShortFunctionsOnASingleLine: false
 AllowShortIfStatementsOnASingleLine: true
 AllowShortLoopsOnASingleLine: false
-BreakBeforeBinaryOperators: false
+BreakBeforeBinaryOperators: true
 BreakBeforeBraces: Linux
 IndentWidth: 4
 SortIncludes: true

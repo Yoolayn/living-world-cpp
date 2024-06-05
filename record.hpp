@@ -11,10 +11,11 @@ class Record
     std::vector<int> ancestors_;
 
   public:
-    Record() : birth_(0){};
-    Record(int birth);
-    Record(int birth, int death);
-    Record(int birth, std::vector<int> ancestors);
+    Record() : Record(0, 0, {}){};
+    Record(int birth) : Record(birth, 0, {}){};
+    Record(int birth, int death) : Record(birth, death, {}){};
+    Record(int birth, std::vector<int> ancestors)
+        : Record(birth, 0, ancestors){};
     Record(int birth, int death, std::vector<int> ancestors);
 
     operator std::string();

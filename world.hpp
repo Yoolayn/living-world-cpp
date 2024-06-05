@@ -9,17 +9,17 @@ class World
   private:
     int worldX_;
     int worldY_;
-    int turn_ = 0;
+    int turn_;
     std::vector<Organism> organisms_;
     char separator = '.';
 
-    std::optional<Species> getOrganismFromPosition(Position position);
+    std::optional<Organism> getOrganismFromPosition(Position position);
     bool isPositionOnWorld(Position position);
     bool isPositionFree(Position position);
 
   public:
-    World(int worldX, int worldY);
     World() : World(6, 6){};
+    World(int worldX, int worldY);
 
     int worldX() const
     {
@@ -42,7 +42,8 @@ class World
         return turn_;
     };
 
-    std::vector<Position> getVectorOfPositionsAround(Position position);
+    std::vector<Position> getVectorOfPositionsAround(Position position,
+                                                     bool free);
     void makeTurn();
 
     void operator()(); // void makeTurn()

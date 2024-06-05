@@ -10,3 +10,14 @@ Animal::Animal() : Organism::Organism()
 {
     species(animal);
 }
+
+Action Animal::act(Organism o)
+{
+    switch (o.species()) {
+    case plant:
+    case animal:
+    case organism:
+        break;
+    }
+    return Action::breed;
+}

@@ -1,28 +1,7 @@
 #include "record.hpp"
 
-Record::Record(int birth)
-{
-    birth_ = birth;
-}
-
-Record::Record(int birth, int death)
-{
-    birth_ = birth;
-    death_ = death;
-}
-
-Record::Record(int birth, std::vector<int> ancestors)
-{
-    birth_ = birth;
-    ancestors_ = ancestors;
-}
-
 Record::Record(int birth, int death, std::vector<int> ancestors)
-{
-    birth_ = birth;
-    death_ = death;
-    ancestors_ = ancestors;
-}
+    : birth_(birth), death_(death), ancestors_(ancestors){};
 
 Record::operator std::string()
 {

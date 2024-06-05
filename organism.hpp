@@ -1,4 +1,5 @@
 #pragma once
+#include "actions.hpp"
 #include "position.hpp"
 #include <ostream>
 #include <string>
@@ -43,8 +44,10 @@ class Organism
     {
         species_ = species;
     };
+    virtual Action act(Organism o);
 
     operator std::string();
+    bool operator==(Species s);
 
     virtual void move(int dx, int dy);
 };
