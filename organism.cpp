@@ -34,6 +34,11 @@ std::string operator+(const std::string &str, Species species)
     return str + to_string(species);
 }
 
+std::string operator+=(std::string &str, Species species)
+{
+    return str + to_string(species);
+}
+
 bool Organism::operator==(Species s)
 {
     return species_ == s;

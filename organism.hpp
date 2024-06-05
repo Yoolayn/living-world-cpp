@@ -8,6 +8,7 @@ enum class Species { plant, animal, organism };
 
 std::ostream &operator<<(std::ostream &os, Species &s);
 std::string operator+(const std::string &str, Species species);
+std::string operator+=(std::string &str, Species species);
 
 class Organism
 {

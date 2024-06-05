@@ -1,5 +1,5 @@
 #include "animal.hpp"
-#include "boost/signals2/signal.hpp"
+#include <boost/signals2/signal.hpp>
 #include "historian.hpp"
 #include "organism.hpp"
 #include "plant.hpp"

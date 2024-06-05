@@ -129,7 +129,7 @@ World::operator std::string()
     for (int wY = 0; wY < this->worldY_; ++wY) {
         for (int wX = 0; wX < this->worldX_; ++wX) {
             if ((spec = getOrganismFromPosition(Position{wX, wY})))
-                result += to_string(spec->species());
+                result += spec->species();
             else
                 result += separator;
         }

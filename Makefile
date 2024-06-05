@@ -5,10 +5,9 @@ OBJDIR = build
 OBJS = $(SRCS:.cpp=.o)
 OBJS := $(addprefix $(OBJDIR)/, $(OBJS))
 TARGETDIR = bin
-BOOSTDIR = boost
 TARGET = $(TARGETDIR)/main
 
-$(TARGET): $(OBJS) | boost
+$(TARGET): $(OBJS)
 	@mkdir -p $(TARGETDIR)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
@@ -18,16 +17,7 @@ $(OBJDIR)/%.o: %.cpp
 
 all: $(TARGET)
 
-boost_1_85_0.tar.gz:
-	wget https://archives.boost.io/release/1.85.0/source/boost_1_85_0.tar.gz
-
-$(BOOSTDIR)/: boost_1_85_0.tar.gz
-	tar xzf ./boost_1_85_0.tar.gz
-	@mv boost_1_85_0 $(BOOSTDIR)
-
-boost: $(BOOSTDIR)/
-
 clean:
 	rm -f $(OBJS)/*.o $(TARGET)
 
-.PHONY: all clean boost
+.PHONY: all clean
