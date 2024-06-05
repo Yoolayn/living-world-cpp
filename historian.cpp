@@ -21,7 +21,7 @@ Historian::operator std::string()
     using namespace std::string_literals;
     std::stringstream ss;
     for (Record r : records_)
-        ss << (std::string)r << std::endl;
+        ss << r << std::endl;
 
     if (std::string s = ss.str(); s == ""s)
         return "nothing"s;

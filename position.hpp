@@ -38,3 +38,4 @@ class Position
 };
 
 std::ostream &operator<<(std::ostream &os, Position &p);
+std::string operator+(const std::string &str, Position position);

@@ -21,3 +21,8 @@ std::ostream &operator<<(std::ostream &os, Record &r)
 {
     return os << (std::string)r;
 }
+
+std::string operator+(const std::string &str, Record record)
+{
+    return str + (std::string) record;
+}

@@ -33,3 +33,8 @@ std::ostream &operator<<(std::ostream &os, Position &p)
 {
     return os << (std::string)p;
 }
+
+std::string operator+(const std::string &str, Position position)
+{
+    return str + (std::string)position;
+}

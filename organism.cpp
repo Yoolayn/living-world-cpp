@@ -42,7 +42,7 @@ bool Organism::operator==(Species s)
 Organism::operator std::string()
 {
     return "{ species: " + species() + ", power: " + std::to_string(power())
-           + ", position: " + (std::string)position() + "}";
+           + ", position: " + position() + "}";
 }
 
 void Organism::move(int dx, int dy)

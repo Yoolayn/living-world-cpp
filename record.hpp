@@ -41,3 +41,4 @@ class Record
 };
 
 std::ostream &operator<<(std::ostream &os, Record &r);
+std::string operator+(const std::string &str, Record record);
