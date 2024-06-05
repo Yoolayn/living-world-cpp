@@ -1,11 +1,37 @@
 #include "organism.hpp"
 #include "position.hpp"
+#include <ostream>
 
 Organism::Organism(int power, Position position)
 {
     this->power(power);
     this->position(position);
-    this->species(organism);
+    this->species(Species::organism);
+}
+
+std::string to_string(Species s)
+{
+    switch (s) {
+    case Species::animal:
+        return "A";
+        break;
+    case Species::plant:
+        return "P";
+        break;
+    case Species::organism:
+        return "O";
+        break;
+    }
+}
+
+std::ostream &operator<<(std::ostream &os, Species &s)
+{
+    return os << to_string(s);
+}
+
+std::string operator+(const std::string &str, Species species)
+{
+    return str + to_string(species);
 }
 
 bool Organism::operator==(Species s)
@@ -13,26 +39,10 @@ bool Organism::operator==(Species s)
     return species_ == s;
 }
 
-std::string to_string(Species s)
-{
-    switch (s) {
-    case animal:
-        return "A";
-        break;
-    case plant:
-        return "P";
-        break;
-    case organism:
-        return "O";
-        break;
-    }
-}
-
 Organism::operator std::string()
 {
-    return "{ species: " + to_string(species()) +
-           ", power: " + std::to_string(power()) +
-           ", position: " + (std::string)position() + "}";
+    return "{ species: " + species() + ", power: " + std::to_string(power())
+           + ", position: " + (std::string)position() + "}";
 }
 
 void Organism::move(int dx, int dy)
@@ -45,9 +55,9 @@ Organism::~Organism(){};
 Action Organism::act(Organism o)
 {
     switch (o.species()) {
-    case plant:
-    case animal:
-    case organism:
+    case Species::plant:
+    case Species::animal:
+    case Species::organism:
         break;
     }
     return Action::breed;

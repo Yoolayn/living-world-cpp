@@ -4,9 +4,10 @@
 #include <ostream>
 #include <string>
 
-enum Species { plant, animal, organism };
+enum class Species { plant, animal, organism };
 
-std::string to_string(Species);
+std::ostream &operator<<(std::ostream &os, Species &s);
+std::string operator+(const std::string &str, Species species);
 
 class Organism
 {
@@ -17,7 +18,7 @@ class Organism
 
   public:
     Organism(int power, Position position);
-    Organism() : power_(0), position_(0, 0), species_(organism){};
+    Organism() : power_(0), position_(0, 0), species_(Species::organism){};
     virtual ~Organism();
 
     int power() const
