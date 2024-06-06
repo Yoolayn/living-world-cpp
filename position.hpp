@@ -35,6 +35,8 @@ class Position
     double distance(Position position);
     double distance_sq(Position position);
     void move(int dx, int dy);
+
+    bool operator==(Position p);
 };
 
 std::ostream &operator<<(std::ostream &os, Position &p);

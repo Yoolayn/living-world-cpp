@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 #define TODO1(str) std::cerr << __FILE__ << ":" << __LINE__ << ":TODO -> " << str << std::endl
 #define TODO0() std::cerr << __FILE__ << ":" << __LINE__ << ":TODO" << std::endl

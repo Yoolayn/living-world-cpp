@@ -29,6 +29,11 @@ void Position::move(int dx, int dy)
     y(y() + dy);
 }
 
+bool Position::operator==(Position p)
+{
+    return this->x_ == p.x_ && this->y_ == p.y_;
+}
+
 std::ostream &operator<<(std::ostream &os, Position &p)
 {
     return os << (std::string)p;

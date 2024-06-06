@@ -1,5 +1,13 @@
 CXX = clang++
-CXXFLAGS = -std=c++23 -Wall -Wextra -Werror -pedantic -O2
+CXXFLAGS = -std=c++23 -Wall -Wextra -Werror -pedantic -Wno-writable-strings
+BUILD ?= debug
+
+ifeq ($(BUILD), debug)
+	CXXFLAGS += -g -O0
+else
+	CXXFLAGS += -O2
+endif
+
 SRCS = $(wildcard *.cpp)
 OBJDIR = build
 OBJS = $(SRCS:.cpp=.o)

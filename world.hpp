@@ -41,13 +41,20 @@ class World
     {
         return turn_;
     };
+    std::vector<Organism> organisms() const
+    {
+        return organisms_;
+    }
 
     std::vector<Position> getVectorOfPositionsAround(Position position,
-                                                     bool free);
+                                                     bool free, int range);
     void makeTurn();
+    bool action(Organism *org, Organism *new_org);
 
     void operator()(); // void makeTurn()
     void operator+=(Organism organism);
+    void operator-=(Organism organism);
+    // void operator-=(int o);
 
     void writeWorld(std::string filename);
     void readWorld(std::string filename);

@@ -9,17 +9,21 @@ enum class Species { plant, animal, organism };
 std::ostream &operator<<(std::ostream &os, Species &s);
 std::string operator+(const std::string &str, Species species);
 std::string operator+=(std::string &str, Species species);
+std::string to_string(Species s);;
 
 class Organism
 {
-  private:
+  protected:
     int power_;
+    int range_;
     Position position_;
     Species species_;
 
   public:
-    Organism(int power, Position position);
-    Organism() : power_(0), position_(0, 0), species_(Species::organism){};
+    Organism(int power, Position position)
+        : power_(power), position_(position){};
+    Organism(int power) : power_(power), range_(1), species_(Species::organism){};
+    Organism() : power_(0), range_(1), position_(0, 0), species_(Species::organism){};
     virtual ~Organism();
 
     int power() const
@@ -42,16 +46,19 @@ class Organism
     {
         return species_;
     };
-    void species(Species species)
+    int range() const
     {
-        species_ = species;
-    };
-    virtual Action act(Organism o);
+        return range_;
+    }
 
     operator std::string();
     bool operator==(Species s);
+    bool operator==(Organism o);
 
+    virtual std::optional<Organism> operator+(Organism o);
+    virtual std::optional<Organism> clone();
     virtual void move(int dx, int dy);
+    virtual Action act(Organism o);
 };
 
 std::ostream &operator<<(std::ostream &os, Organism &o);

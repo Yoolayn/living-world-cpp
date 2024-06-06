@@ -3,12 +3,17 @@
 
 Plant::Plant(int power, Position position) : Organism(power, position)
 {
-    species(Species::plant);
+    species_ = Species::plant;
+}
+
+Plant::Plant(int power) : Organism(power)
+{
+    species_ = Species::plant;
 }
 
 Plant::Plant() : Organism()
 {
-    species(Species::plant);
+    species_ = Species::plant;
 }
 
 void Plant::move(int dx, int dy)
@@ -16,4 +21,9 @@ void Plant::move(int dx, int dy)
     (void)dx;
     (void)dy;
     Organism::move(0, 0);
+}
+
+std::optional<Organism> Plant::clone()
+{
+    return Plant{0};
 }

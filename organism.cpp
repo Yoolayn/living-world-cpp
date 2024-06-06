@@ -1,13 +1,7 @@
 #include "organism.hpp"
 #include "position.hpp"
+#include "todo.hpp"
 #include <ostream>
-
-Organism::Organism(int power, Position position)
-{
-    this->power(power);
-    this->position(position);
-    this->species(Species::organism);
-}
 
 std::string to_string(Species s)
 {
@@ -21,17 +15,16 @@ std::string to_string(Species s)
     case Species::organism:
         return "O";
         break;
+    default:
+        TODO("cry");
+        return "?";
+        break;
     }
 }
 
 std::ostream &operator<<(std::ostream &os, Species &s)
 {
     return os << to_string(s);
-}
-
-std::string operator+(const std::string &str, Species species)
-{
-    return str + to_string(species);
 }
 
 std::string operator+=(std::string &str, Species species)
@@ -44,10 +37,16 @@ bool Organism::operator==(Species s)
     return species_ == s;
 }
 
+bool Organism::operator==(Organism o)
+{
+    return power_ == o.power_ && position_ == o.position_
+           && species_ == o.species_;
+}
+
 Organism::operator std::string()
 {
-    return "{ species: " + species() + ", power: " + std::to_string(power())
-           + ", position: " + position() + "}";
+    return "{ species: " + to_string(species()) + ", power: "
+           + std::to_string(power()) + ", position: " + position() + "}";
 }
 
 void Organism::move(int dx, int dy)
@@ -71,4 +70,15 @@ Action Organism::act(Organism o)
 std::ostream &operator<<(std::ostream &os, Organism &o)
 {
     return os << (std::string)o;
+}
+
+std::optional<Organism> Organism::operator+(Organism o)
+{
+    (void)o;
+    return std::optional<Organism>();
+}
+
+std::optional<Organism> Organism::clone()
+{
+    return std::optional<Organism>();
 }

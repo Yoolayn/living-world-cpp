@@ -7,3 +7,4 @@ BreakBeforeBraces: Linux
 IndentWidth: 4
 SortIncludes: true
 NamespaceIndentation: All
+ColumnLimit: 120
