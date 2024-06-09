@@ -8,8 +8,9 @@ class Animal : public Organism
     Animal(int power);
     Animal();
 
-    Action act(Organism o);
-    // Animal operator+(Animal o);
-    std::optional<Organism> operator+(Organism o);
-    std::optional<Organism> clone();
+    virtual Action act(Organism o) override;
+    virtual std::optional<Organism> operator+(Organism o) override;
+    virtual std::optional<Organism> clone() override;
+
+    virtual ~Animal() override = default;
 };

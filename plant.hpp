@@ -4,10 +4,9 @@
 class Plant : public Organism
 {
   public:
-    Plant(int power, Position position);
-    Plant(int power);
+    Plant(Position position);
     Plant();
 
-    std::optional<Organism> clone();
+    virtual std::optional<Organism> clone();
     void move(int dx, int dy);
 };

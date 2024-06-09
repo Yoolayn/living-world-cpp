@@ -24,6 +24,10 @@ Action Animal::act(Organism o)
     case Species::plant:
     case Species::animal:
     case Species::organism:
+    case Species::grass:
+    case Species::wolf:
+    case Species::sheep:
+    case Species::dandelion:
         break;
     }
     return Action::breed;

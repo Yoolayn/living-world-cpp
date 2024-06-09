@@ -1,17 +1,12 @@
 #include "plant.hpp"
 #include "organism.hpp"
 
-Plant::Plant(int power, Position position) : Organism(power, position)
+Plant::Plant(Position position) : Organism(0, position)
 {
     species_ = Species::plant;
 }
 
-Plant::Plant(int power) : Organism(power)
-{
-    species_ = Species::plant;
-}
-
-Plant::Plant() : Organism()
+Plant::Plant() : Organism(0)
 {
     species_ = Species::plant;
 }
@@ -25,5 +20,5 @@ void Plant::move(int dx, int dy)
 
 std::optional<Organism> Plant::clone()
 {
-    return Plant{0};
+    return Plant{};
 }
