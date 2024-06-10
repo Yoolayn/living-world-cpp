@@ -2,8 +2,7 @@
 #include "organism.hpp"
 #include <optional>
 
-Animal::Animal(int power, Position position)
-    : Organism::Organism(power, position)
+Animal::Animal(int power, Position position) : Organism::Organism(power, position)
 {
     species_ = Species::animal;
 }
@@ -33,12 +32,12 @@ Action Animal::act(Organism o)
     return Action::breed;
 }
 
-std::optional<Organism> Animal::operator+(Organism o)
+std::optional<std::unique_ptr<Organism>> Animal::operator+(Organism *o)
 {
-    return Animal{this->power_ + o.power()};
+    return std::make_unique<Animal>(this->power_ + o->power());
 }
 
-std::optional<Organism> Animal::clone()
+std::optional<std::unique_ptr<Organism>> Animal::clone()
 {
-    return std::optional<Organism>();
+    return std::nullopt;
 }

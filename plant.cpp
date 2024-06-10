@@ -4,21 +4,29 @@
 Plant::Plant(Position position) : Organism(0, position)
 {
     species_ = Species::plant;
+    range_ = 2;
 }
 
 Plant::Plant() : Organism(0)
 {
     species_ = Species::plant;
+    range_ = 2;
 }
 
-void Plant::move(int dx, int dy)
+void Plant::move(Position p)
 {
-    (void)dx;
-    (void)dy;
-    Organism::move(0, 0);
+    (void)p;
+    position_.move(0, 0);
 }
 
-std::optional<Organism> Plant::clone()
+void Plant::move(int x, int y)
 {
-    return Plant{};
+    (void)x;
+    (void)y;
+    position_.move(0, 0);
+}
+
+std::optional<std::unique_ptr<Organism>> Plant::clone()
+{
+    return std::make_unique<Plant>();
 }

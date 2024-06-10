@@ -59,9 +59,14 @@ Organism::operator std::string()
            + "}";
 }
 
-void Organism::move(int dx, int dy)
+void Organism::move(Position p)
 {
-    position_.move(dx, dy);
+    position_.move(p);
+}
+
+void Organism::move(int x, int y)
+{
+    position_.move(x, y);
 }
 
 Organism::~Organism(){};
@@ -86,13 +91,13 @@ std::ostream &operator<<(std::ostream &os, Organism &o)
     return os << (std::string)o;
 }
 
-std::optional<Organism> Organism::operator+(Organism o)
+std::optional<std::unique_ptr<Organism>> Organism::operator+(Organism *o)
 {
     (void)o;
-    return std::optional<Organism>();
+    return std::nullopt;
 }
 
-std::optional<Organism> Organism::clone()
+std::optional<std::unique_ptr<Organism>> Organism::clone()
 {
-    return std::optional<Organism>();
+    return std::nullopt;
 }

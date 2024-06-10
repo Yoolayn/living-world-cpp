@@ -29,6 +29,12 @@ void Position::move(int dx, int dy)
     y(y() + dy);
 }
 
+void Position::move(Position p)
+{
+    x(p.x());
+    y(p.y());
+}
+
 bool Position::operator==(Position p)
 {
     return this->x_ == p.x_ && this->y_ == p.y_;

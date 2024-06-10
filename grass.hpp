@@ -1,5 +1,6 @@
 #pragma once
 #include "plant.hpp"
+#include <memory>
 
 class Grass : public Plant
 {
@@ -7,5 +8,5 @@ class Grass : public Plant
     Grass(Position position);
     Grass();
 
-    std::optional<Organism> clone();
+    std::optional<std::unique_ptr<Organism>> clone() override;
 };

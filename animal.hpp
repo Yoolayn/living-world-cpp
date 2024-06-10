@@ -9,8 +9,8 @@ class Animal : public Organism
     Animal();
 
     virtual Action act(Organism o) override;
-    virtual std::optional<Organism> operator+(Organism o) override;
-    virtual std::optional<Organism> clone() override;
+    virtual std::optional<std::unique_ptr<Organism>> operator+(Organism *o) override;
+    virtual std::optional<std::unique_ptr<Organism>> clone() override;
 
     virtual ~Animal() override = default;
 };

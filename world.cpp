@@ -5,16 +5,15 @@
 #include <cstddef>
 #include <iostream>
 #include <optional>
-#include <ranges>
 // #include <fstream>
 
 World::World(int worldX, int worldY) : worldX_(worldX), worldY_(worldY), turn_(0), organisms_(){};
 
-std::optional<Organism> World::getOrganismFromPosition(Position target)
+std::optional<Organism *> World::getOrganismFromPosition(Position target)
 {
-    for (Organism org : this->organisms_)
-        if (org.position().x() == target.x() && org.position().y() == target.y()) return org;
-    return std::optional<Organism>();
+    for (auto &org : this->organisms_)
+        if (org->position().x() == target.x() && org->position().y() == target.y()) return org.get();
+    return std::nullopt;
 }
 
 bool World::isPositionOnWorld(Position p)
@@ -27,44 +26,34 @@ bool World::isPositionFree(Position position)
     return !(bool)this->getOrganismFromPosition(position);
 }
 
-void World::operator+=(Organism organism)
+void World::operator+=(std::unique_ptr<Organism> organism)
 {
-    organisms_.push_back(organism);
+    organisms_.push_back(std::move(organism));
 }
 
-void World::operator-=(Organism organism)
+void World::operator-=(Organism *organism)
 {
-    auto it = std::find(organisms_.begin(), organisms_.end(), organism);
+    auto it = std::find_if(organisms_.begin(), organisms_.end(),
+                           [organism](const std::unique_ptr<Organism> &x) { return x.get() == organism; });
     if (it != organisms_.end()) organisms_.erase(it);
-}
-
-constexpr auto offsets(int range)
-{
-    namespace pipe = std::views;
-
-    auto positions
-        = pipe::iota(-range, range + 1) | pipe::transform([range](int dx) {
-              return pipe::iota(-range, range + 1) | pipe::transform([dx](int dy) { return std::pair{dx, dy}; });
-          })
-          | pipe::join;
-
-    return positions;
 }
 
 std::vector<Position> World::getVectorOfPositionsAround(Position position, bool free, int range)
 {
-    namespace pipe = std::views;
-
     int pos_x = position.x(), pos_y = position.y();
+    std::vector<Position> result;
 
-    auto positions
-        = offsets(range) | pipe::filter([](auto p) { return p.first != 0 || p.second != 0; })
-          | pipe::transform([&](std::pair<int, int> p) { return Position(pos_x + p.first, pos_y + p.second); })
-          | pipe::filter(
-              [this, free](Position pos) { return isPositionOnWorld(pos) && free ? isPositionFree(pos) : true; })
-          | pipe::common;
+    for (int x = -range; x < range + 1; ++x)
+        for (int y = -range; y < range + 1; ++y)
+            if ((x != 0 || y != 0) && isPositionOnWorld(Position{pos_x + x, pos_y + y}))
+                result.push_back(Position{pos_x + x, pos_y + y});
 
-    return std::vector<Position>(positions.begin(), positions.end());
+    if (free) {
+        auto iter = std::remove_if(result.begin(), result.end(), [this](Position p) { return !isPositionFree(p); });
+        result.erase(iter, result.end());
+    }
+
+    return result;
 }
 
 void World::makeTurn()
@@ -73,22 +62,23 @@ void World::makeTurn()
     int random_index;
     srand(time(NULL));
 
-    std::vector<Organism> copy;
     size_t s = organisms().size();
 
-    for (size_t i = s; i > 0; --i) {
+    for (size_t i = s - 1; i > 0; --i) {
         if (i >= organisms().size()) break;
-        Organism *org = &organisms_[i];
-        new_positions = getVectorOfPositionsAround(org->position(), false, 1);
+        Organism *org = organisms_[i].get();
+        new_positions = getVectorOfPositionsAround(org->position(), false, org->range());
         random_index = rand() % new_positions.size();
         Position pos = new_positions[random_index];
 
         if (auto new_org = getOrganismFromPosition(pos)) {
-            if (std::find(organisms_.begin(), organisms_.end(), *org) != organisms_.end())
-                if (!action(org, &*new_org)) continue;
-            org->position(pos);
+            if (std::find_if(organisms_.begin(), organisms_.end(),
+                             [org](const std::unique_ptr<Organism> &x) { return x.get() == org; })
+                != organisms_.end())
+                if (action(org, *new_org)) continue;
+            org->move(pos);
         } else {
-            org->position(pos);
+            org->move(pos);
         }
     }
     turn_++;
@@ -98,39 +88,38 @@ bool World::action(Organism *org, Organism *new_org)
 {
     switch (org->act(*new_org)) {
     case Action::breed: {
-        auto child = *org + *new_org;
+        auto child = *org + new_org;
         if (!child) return true;
-        auto free_positions = getVectorOfPositionsAround(org->position(), true, 1);
-        child->position(free_positions[rand() & free_positions.size()]);
-        *this += *child;
+        auto free_positions = getVectorOfPositionsAround(org->position(), true, org->range());
+        (*child)->move(free_positions[rand() & free_positions.size()]);
+        *this += std::move(*child);
         return true;
     } break;
     case Action::clone: {
         auto child = org->clone();
         if (!child) return true;
-        auto free_positions = getVectorOfPositionsAround(org->position(), true, 1);
-        child->position(free_positions[rand() & free_positions.size()]);
-        *this += *child;
+        auto free_positions = getVectorOfPositionsAround(org->position(), true, org->range());
+        (*child)->move(free_positions[rand() & free_positions.size()]);
+        *this += std::move(*child);
         return true;
     } break;
     case Action::die:
-        *this -= *org;
+        *this -= org;
         TODO("report death");
         return false;
         break;
     case Action::kill:
-        *this -= *new_org;
+        *this -= new_org;
         TODO("report death");
         return true;
         break;
     case Action::eat:
         TODO("nom nom");
-        *this -= *new_org;
+        *this -= new_org;
         return true;
         TODO("report death");
         break;
     default:
-        TODO("DEFAULT");
         return true;
         break;
     }
@@ -139,6 +128,7 @@ bool World::action(Organism *org, Organism *new_org)
 void World::operator()()
 {
     makeTurn();
+    std::cout << *this;
 }
 
 void World::writeWorld(std::string fileName)
@@ -156,12 +146,12 @@ void World::readWorld(std::string fileName)
 World::operator std::string()
 {
     std::string result = "\nturn: " + std::to_string(turn()) + "\n";
-    std::optional<Organism> spec;
+    std::optional<Organism *> spec;
 
     for (int wY = 0; wY < this->worldY_; ++wY) {
         for (int wX = 0; wX < this->worldX_; ++wX) {
             if ((spec = getOrganismFromPosition(Position{wX, wY}))) {
-                result += to_string(spec->species());
+                result += to_string((*spec)->species());
             } else
                 result += separator;
         }

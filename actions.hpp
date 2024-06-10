@@ -1,1 +1,1 @@
-enum class Action { breed, clone, die, eat, kill };
+enum class Action { breed, clone, die, eat, kill, nothing };

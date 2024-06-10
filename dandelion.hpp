@@ -1,4 +1,5 @@
 #include "plant.hpp"
+#include <memory>
 
 class Dandelion : public Plant
 {
@@ -6,5 +7,5 @@ class Dandelion : public Plant
     Dandelion();
     Dandelion(Position position);
 
-    std::optional<Organism> clone();
+    std::optional<std::unique_ptr<Organism>> clone() override;
 };

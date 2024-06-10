@@ -1,6 +1,7 @@
 #pragma once
 #include "organism.hpp"
 #include <ctime>
+#include <memory>
 #include <ostream>
 #include <vector>
 
@@ -10,10 +11,10 @@ class World
     int worldX_;
     int worldY_;
     int turn_;
-    std::vector<Organism> organisms_;
+    std::vector<std::unique_ptr<Organism>> organisms_;
     char separator = '.';
 
-    std::optional<Organism> getOrganismFromPosition(Position position);
+    std::optional<Organism *> getOrganismFromPosition(Position position);
     bool isPositionOnWorld(Position position);
     bool isPositionFree(Position position);
 
@@ -41,19 +42,18 @@ class World
     {
         return turn_;
     };
-    std::vector<Organism> organisms() const
+    std::vector<std::unique_ptr<Organism>> &organisms()
     {
         return organisms_;
     }
 
-    std::vector<Position> getVectorOfPositionsAround(Position position,
-                                                     bool free, int range);
+    std::vector<Position> getVectorOfPositionsAround(Position position, bool free, int range);
     void makeTurn();
     bool action(Organism *org, Organism *new_org);
 
     void operator()(); // void makeTurn()
-    void operator+=(Organism organism);
-    void operator-=(Organism organism);
+    void operator+=(std::unique_ptr<Organism> organism);
+    void operator-=(Organism *organism);
     // void operator-=(int o);
 
     void writeWorld(std::string filename);

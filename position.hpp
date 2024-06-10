@@ -35,6 +35,7 @@ class Position
     double distance(Position position);
     double distance_sq(Position position);
     void move(int dx, int dy);
+    void move(Position p);
 
     bool operator==(Position p);
 };

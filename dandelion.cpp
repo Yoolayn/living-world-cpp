@@ -12,7 +12,8 @@ Dandelion::Dandelion(Position position) : Plant(position)
     species_ = Species::dandelion;
 }
 
-std::optional<Organism> Dandelion::clone()
+std::optional<std::unique_ptr<Organism>> Dandelion::clone()
 {
-    return Dandelion{};
+
+    return std::make_unique<Dandelion>();
 }
