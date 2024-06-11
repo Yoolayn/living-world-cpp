@@ -13,41 +13,41 @@ std::string species_to_string(const Species &s);
 class Organism
 {
   protected:
-    int power_;
-    int range_;
-    Position position_;
-    Species species_;
+    int m_Power;
+    int m_Range;
+    Position m_Position;
+    Species m_Species;
     Organism(int power, Position position)
-        : power_(power), range_(1), position_(position), species_(Species::organism){};
-    Organism(int power) : power_(power), range_(1), position_(-1, -1), species_(Species::organism){};
-    Organism() : power_(0), range_(1), position_(-1, -1), species_(Species::organism){};
+        : m_Power(power), m_Range(1), m_Position(position), m_Species(Species::organism){};
+    Organism(int power) : m_Power(power), m_Range(1), m_Position(-1, -1), m_Species(Species::organism){};
+    Organism() : m_Power(0), m_Range(1), m_Position(-1, -1), m_Species(Species::organism){};
 
   public:
     virtual ~Organism();
 
     int power() const
     {
-        return power_;
+        return m_Power;
     };
     void power(int power)
     {
-        power_ = power;
+        m_Power = power;
     };
     Position position() const
     {
-        return position_;
+        return m_Position;
     };
     void position(Position position)
     {
-        position_ = position;
+        m_Position = position;
     };
-    const Species& species() const
+    const Species &species() const
     {
-        return species_;
+        return m_Species;
     };
     int range() const
     {
-        return range_;
+        return m_Range;
     }
 
     operator std::string();

@@ -6,9 +6,9 @@
 class Record
 {
   private:
-    int birth_;
-    std::optional<int> death_;
-    std::vector<int> ancestors_;
+    int m_Birth;
+    std::optional<int> m_Death;
+    std::vector<int> m_Ancestors;
 
   public:
     Record() : Record(0, 0, {}){};
@@ -21,19 +21,19 @@ class Record
 
     void death(int d)
     {
-        death_ = std::optional(d);
+        m_Death = std::optional(d);
     };
     int birth() const
     {
-        return birth_;
+        return m_Birth;
     };
     std::optional<int> death()
     {
-        return death_;
+        return m_Death;
     };
     std::vector<int> ancestors()
     {
-        return ancestors_;
+        return m_Ancestors;
     };
 
     void operator+=(const int &b); // add ancestors

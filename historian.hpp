@@ -6,10 +6,10 @@
 class Historian
 {
   private:
-    std::vector<Record> records_;
+    std::vector<Record> m_Records;
 
   public:
-    Historian() : records_(){};
+    Historian() : m_Records(){};
     std::optional<Record> operator[](size_t index); // get a record
 
     void updateRecord(int index, Record record);

@@ -1,11 +1,11 @@
+#include "dandelion.hpp"
 #include "grass.hpp"
 #include "historian.hpp"
 #include "position.hpp"
 #include "sheep.hpp"
 #include "todo.hpp"
-#include "world.hpp"
 #include "wolf.hpp"
-#include "dandelion.hpp"
+#include "world.hpp"
 #include <memory>
 
 int main()

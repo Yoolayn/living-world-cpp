@@ -4,12 +4,12 @@
 
 Sheep::Sheep(Position p) : Animal(3, p)
 {
-    species_ = Species::sheep;
+    m_Species = Species::sheep;
 }
 
 Sheep::Sheep() : Animal(3)
 {
-    species_ = Species::sheep;
+    m_Species = Species::sheep;
 }
 
 Action Sheep::act(Organism o)

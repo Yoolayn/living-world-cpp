@@ -4,17 +4,17 @@
 
 Animal::Animal(int power, Position position) : Organism::Organism(power, position)
 {
-    species_ = Species::animal;
+    m_Species = Species::animal;
 }
 
 Animal::Animal(int power) : Organism::Organism(power)
 {
-    species_ = Species::animal;
+    m_Species = Species::animal;
 }
 
 Animal::Animal() : Organism::Organism()
 {
-    species_ = Species::animal;
+    m_Species = Species::animal;
 }
 
 Action Animal::act(Organism o)

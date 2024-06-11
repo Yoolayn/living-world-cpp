@@ -4,17 +4,17 @@
 
 Wolf::Wolf() : Animal()
 {
-    species_ = Species::wolf;
+    m_Species = Species::wolf;
 }
 
 Wolf::Wolf(int power) : Animal(power)
 {
-    species_ = Species::wolf;
+    m_Species = Species::wolf;
 }
 
 Wolf::Wolf(int power, Position position) : Animal(power, position)
 {
-    species_ = Species::wolf;
+    m_Species = Species::wolf;
 }
 
 Action Wolf::act(Organism o)
@@ -35,5 +35,5 @@ Action Wolf::act(Organism o)
 
 std::optional<Organism> Wolf::operator+(Organism o)
 {
-    return Wolf{power_ + o.power() / 2};
+    return Wolf{m_Power + o.power() / 2};
 }

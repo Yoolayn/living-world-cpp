@@ -4,12 +4,12 @@
 
 Dandelion::Dandelion() : Plant()
 {
-    species_ = Species::dandelion;
+    m_Species = Species::dandelion;
 }
 
 Dandelion::Dandelion(Position position) : Plant(position)
 {
-    species_ = Species::dandelion;
+    m_Species = Species::dandelion;
 }
 
 std::optional<std::unique_ptr<Organism>> Dandelion::clone()

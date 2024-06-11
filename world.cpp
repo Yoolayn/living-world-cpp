@@ -6,11 +6,11 @@
 #include <iostream>
 #include <optional>
 
-World::World(int worldX, int worldY) : worldX_(worldX), worldY_(worldY), turn_(0), organisms_(){};
+World::World(int worldX, int worldY) : m_WorldX(worldX), m_WorldY(worldY), m_Turn(0), m_Organisms(){};
 
 std::optional<Organism *> World::getOrganismFromPosition(Position target)
 {
-    for (auto &org : this->organisms_)
+    for (auto &org : this->m_Organisms)
         if (org->position().x() == target.x() && org->position().y() == target.y()) return org.get();
     return std::nullopt;
 }
@@ -27,14 +27,14 @@ bool World::isPositionFree(Position position)
 
 void World::operator+=(std::unique_ptr<Organism> organism)
 {
-    organisms_.push_back(std::move(organism));
+    m_Organisms.push_back(std::move(organism));
 }
 
 void World::operator-=(Organism *organism)
 {
-    auto it = std::find_if(organisms_.begin(), organisms_.end(),
+    auto it = std::find_if(m_Organisms.begin(), m_Organisms.end(),
                            [organism](const std::unique_ptr<Organism> &x) { return x.get() == organism; });
-    if (it != organisms_.end()) organisms_.erase(it);
+    if (it != m_Organisms.end()) m_Organisms.erase(it);
 }
 
 std::vector<Position> World::getVectorOfPositionsAround(Position position, bool free, int range)
@@ -65,22 +65,22 @@ void World::makeTurn()
 
     for (size_t i = s - 1; i > 0; --i) {
         if (i >= organisms().size()) break;
-        Organism *org = organisms_[i].get();
+        Organism *org = m_Organisms[i].get();
         new_positions = getVectorOfPositionsAround(org->position(), false, org->range());
         random_index = rand() % new_positions.size();
         Position pos = new_positions[random_index];
 
         if (auto new_org = getOrganismFromPosition(pos)) {
-            if (std::find_if(organisms_.begin(), organisms_.end(),
+            if (std::find_if(m_Organisms.begin(), m_Organisms.end(),
                              [org](const std::unique_ptr<Organism> &x) { return x.get() == org; })
-                != organisms_.end())
+                != m_Organisms.end())
                 if (action(org, *new_org)) continue;
             org->move(pos);
         } else {
             org->move(pos);
         }
     }
-    turn_++;
+    m_Turn++;
 }
 
 bool World::action(Organism *org, Organism *new_org)
@@ -147,8 +147,8 @@ World::operator std::string()
     std::string result = "\nturn: " + std::to_string(turn()) + "\n";
     std::optional<Organism *> spec;
 
-    for (int wY = 0; wY < this->worldY_; ++wY) {
-        for (int wX = 0; wX < this->worldX_; ++wX) {
+    for (int wY = 0; wY < this->m_WorldY; ++wY) {
+        for (int wX = 0; wX < this->m_WorldX; ++wX) {
             if ((spec = getOrganismFromPosition(Position{wX, wY}))) {
                 result += species_to_string((*spec)->species());
             } else

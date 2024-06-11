@@ -2,7 +2,7 @@
 #include "position.hpp"
 #include <ostream>
 
-std::string species_to_string(const Species& s)
+std::string species_to_string(const Species &s)
 {
     switch (s) {
     case Species::plant:
@@ -31,28 +31,28 @@ std::string species_to_string(const Species& s)
 
 bool Organism::operator==(Species s)
 {
-    return species_ == s;
+    return m_Species == s;
 }
 
 bool Organism::operator==(Organism o)
 {
-    return power_ == o.power_ && position_ == o.position_ && species_ == o.species_;
+    return m_Power == o.m_Power && m_Position == o.m_Position && m_Species == o.m_Species;
 }
 
 Organism::operator std::string()
 {
-    return "{ species: " + species_to_string(species()) + ", power: " + std::to_string(power()) + ", position: " + position()
-           + "}";
+    return "{ species: " + species_to_string(species()) + ", power: " + std::to_string(power())
+           + ", position: " + position() + "}";
 }
 
 void Organism::move(Position p)
 {
-    position_.move(p);
+    m_Position.move(p);
 }
 
 void Organism::move(int x, int y)
 {
-    position_.move(x, y);
+    m_Position.move(x, y);
 }
 
 Organism::~Organism(){};

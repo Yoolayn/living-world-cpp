@@ -8,10 +8,10 @@
 class World
 {
   private:
-    int worldX_;
-    int worldY_;
-    int turn_;
-    std::vector<std::unique_ptr<Organism>> organisms_;
+    int m_WorldX;
+    int m_WorldY;
+    int m_Turn;
+    std::vector<std::unique_ptr<Organism>> m_Organisms;
     char separator = '.';
 
     std::optional<Organism *> getOrganismFromPosition(Position position);
@@ -24,27 +24,27 @@ class World
 
     int worldX() const
     {
-        return worldX_;
+        return m_WorldX;
     };
     void worldX(int x)
     {
-        worldX_ = x;
+        m_WorldX = x;
     };
     int worldY() const
     {
-        return worldY_;
+        return m_WorldY;
     };
     void worldY(int y)
     {
-        worldY_ = y;
+        m_WorldY = y;
     };
     int turn() const
     {
-        return turn_;
+        return m_Turn;
     };
     std::vector<std::unique_ptr<Organism>> &organisms()
     {
-        return organisms_;
+        return m_Organisms;
     }
 
     std::vector<Position> getVectorOfPositionsAround(Position position, bool free, int range);

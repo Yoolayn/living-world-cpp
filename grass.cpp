@@ -4,12 +4,12 @@
 
 Grass::Grass(Position position) : Plant(position)
 {
-    species_ = Species::grass;
+    m_Species = Species::grass;
 };
 
 Grass::Grass() : Plant()
 {
-    species_ = Species::grass;
+    m_Species = Species::grass;
 };
 
 std::optional<std::unique_ptr<Organism>> Grass::clone()
