@@ -2,12 +2,12 @@
 #include "organism.hpp"
 #include <optional>
 
-Sheep::Sheep() : Animal(3)
+Sheep::Sheep(Position p) : Animal(3, p)
 {
     species_ = Species::sheep;
 }
 
-Sheep::Sheep(Position p) : Animal(3, p)
+Sheep::Sheep() : Animal(3)
 {
     species_ = Species::sheep;
 }

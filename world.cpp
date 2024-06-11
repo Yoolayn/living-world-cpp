@@ -5,7 +5,6 @@
 #include <cstddef>
 #include <iostream>
 #include <optional>
-// #include <fstream>
 
 World::World(int worldX, int worldY) : worldX_(worldX), worldY_(worldY), turn_(0), organisms_(){};
 
@@ -151,7 +150,7 @@ World::operator std::string()
     for (int wY = 0; wY < this->worldY_; ++wY) {
         for (int wX = 0; wX < this->worldX_; ++wX) {
             if ((spec = getOrganismFromPosition(Position{wX, wY}))) {
-                result += to_string((*spec)->species());
+                result += species_to_string((*spec)->species());
             } else
                 result += separator;
         }

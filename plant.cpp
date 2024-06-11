@@ -28,5 +28,5 @@ void Plant::move(int x, int y)
 
 std::optional<std::unique_ptr<Organism>> Plant::clone()
 {
-    return std::make_unique<Plant>();
+    return std::nullopt;
 }

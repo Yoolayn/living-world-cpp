@@ -7,12 +7,12 @@ Animal::Animal(int power, Position position) : Organism::Organism(power, positio
     species_ = Species::animal;
 }
 
-Animal::Animal() : Organism::Organism()
+Animal::Animal(int power) : Organism::Organism(power)
 {
     species_ = Species::animal;
 }
 
-Animal::Animal(int power) : Organism::Organism(power)
+Animal::Animal() : Organism::Organism()
 {
     species_ = Species::animal;
 }
@@ -34,7 +34,8 @@ Action Animal::act(Organism o)
 
 std::optional<std::unique_ptr<Organism>> Animal::operator+(Organism *o)
 {
-    return std::make_unique<Animal>(this->power_ + o->power());
+    (void)o;
+    return std::nullopt;
 }
 
 std::optional<std::unique_ptr<Organism>> Animal::clone()

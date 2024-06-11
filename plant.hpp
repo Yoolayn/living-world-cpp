@@ -4,10 +4,11 @@
 
 class Plant : public Organism
 {
-  public:
+  protected:
     Plant(Position position);
     Plant();
 
+  public:
     std::optional<std::unique_ptr<Organism>> clone() override;
     void move(Position p) override;
     void move(int x, int y) override;

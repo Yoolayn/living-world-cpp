@@ -1,15 +1,15 @@
 #include "organism.hpp"
 #include "position.hpp"
-#include "todo.hpp"
 #include <ostream>
-std::string to_string(Species s)
+
+std::string species_to_string(const Species& s)
 {
     switch (s) {
-    case Species::animal:
-        return "A";
-        break;
     case Species::plant:
         return "P";
+        break;
+    case Species::animal:
+        return "A";
         break;
     case Species::organism:
         return "O";
@@ -26,21 +26,7 @@ std::string to_string(Species s)
     case Species::dandelion:
         return "D";
         break;
-    default:
-        TODO("cry");
-        return "?";
-        break;
     }
-}
-
-std::ostream &operator<<(std::ostream &os, Species &s)
-{
-    return os << to_string(s);
-}
-
-std::string operator+=(std::string &str, Species species)
-{
-    return str + to_string(species);
 }
 
 bool Organism::operator==(Species s)
@@ -55,7 +41,7 @@ bool Organism::operator==(Organism o)
 
 Organism::operator std::string()
 {
-    return "{ species: " + to_string(species()) + ", power: " + std::to_string(power()) + ", position: " + position()
+    return "{ species: " + species_to_string(species()) + ", power: " + std::to_string(power()) + ", position: " + position()
            + "}";
 }
 
