@@ -13,20 +13,25 @@ Plant::Plant() : Organism(0)
     m_Range = 2;
 }
 
-void Plant::move(Position p)
+void Plant::move(Position)
 {
-    (void)p;
     m_Position.move(0, 0);
 }
 
-void Plant::move(int x, int y)
+void Plant::move(int, int)
 {
-    (void)x;
-    (void)y;
     m_Position.move(0, 0);
 }
 
 std::optional<std::unique_ptr<Organism>> Plant::clone()
 {
     return std::nullopt;
+}
+
+Action Plant::act(Organism &o)
+{
+    if (m_Species == o.species()) {
+        return Action::breed;
+    }
+    return Action::nothing;
 }

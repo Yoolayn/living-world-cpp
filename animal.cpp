@@ -17,7 +17,7 @@ Animal::Animal() : Organism::Organism()
     m_Species = Species::animal;
 }
 
-Action Animal::act(Organism o)
+Action Animal::act(Organism &o)
 {
     switch (o.species()) {
     case Species::plant:
@@ -26,15 +26,14 @@ Action Animal::act(Organism o)
     case Species::grass:
     case Species::wolf:
     case Species::sheep:
-    case Species::dandelion:
+    case Species::fern:
         break;
     }
     return Action::breed;
 }
 
-std::optional<std::unique_ptr<Organism>> Animal::operator+(Organism *o)
+std::optional<std::unique_ptr<Organism>> Animal::operator+(Organism *)
 {
-    (void)o;
     return std::nullopt;
 }
 

@@ -8,6 +8,6 @@ class Wolf : public Animal
     Wolf(int power);
     Wolf(int power, Position position);
 
-    Action act(Organism o);
+    Action act(Organism &o);
     std::optional<Organism> operator+(Organism o);
 };

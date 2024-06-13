@@ -5,7 +5,7 @@
 #include <ostream>
 #include <string>
 
-enum class Species { plant, animal, organism, grass, wolf, sheep, dandelion };
+enum class Species { plant, animal, organism, grass, wolf, sheep, fern };
 
 std::string operator+(const std::string &str, Species species);
 std::string species_to_string(const Species &s);
@@ -56,7 +56,7 @@ class Organism
 
     virtual std::optional<std::unique_ptr<Organism>> operator+(Organism *o);
     virtual std::optional<std::unique_ptr<Organism>> clone();
-    virtual Action act(Organism o);
+    virtual Action act(Organism &o);
     virtual void move(int x, int y);
     virtual void move(Position p);
 };

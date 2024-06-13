@@ -1,5 +1,6 @@
 #include "sheep.hpp"
 #include "organism.hpp"
+#include "macros.hpp"
 #include <optional>
 
 Sheep::Sheep(Position p) : Animal(3, p)
@@ -12,23 +13,23 @@ Sheep::Sheep() : Animal(3)
     m_Species = Species::sheep;
 }
 
-Action Sheep::act(Organism o)
+Action Sheep::act(Organism &o)
 {
     switch (o.species()) {
-    case Species::plant:
-    case Species::animal:
-    case Species::organism:
     case Species::grass:
+        return Action::eat;
     case Species::wolf:
+        return Action::die;
     case Species::sheep:
-    case Species::dandelion:
-        break;
+        return Action::breed;
+    case Species::fern:
+        return Action::eat;
+    default:
+        return Action::nothing;
     }
-    return Action::breed;
 }
 
-std::optional<Organism> Sheep::operator+(Sheep s)
+std::optional<Organism> Sheep::operator+(Sheep)
 {
-    (void)s;
     return Sheep{};
 }

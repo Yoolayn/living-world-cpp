@@ -37,7 +37,7 @@ void Position::move(Position p)
 
 bool Position::operator==(Position p)
 {
-    return this->x_ == p.x_ && this->y_ == p.y_;
+    return this->m_X == p.m_X && this->m_Y == p.m_Y;
 }
 
 std::ostream &operator<<(std::ostream &os, Position &p)

@@ -4,7 +4,7 @@ BUILD ?= debug
 MAKEFLAGS := --jobs=$(shell nproc)
 
 ifeq ($(BUILD), debug)
-	CXXFLAGS += -g -O0
+	CXXFLAGS += -g -O0 -DDEBUG
 else
 	CXXFLAGS += -O2
 endif

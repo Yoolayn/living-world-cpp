@@ -6,28 +6,28 @@
 class Position
 {
   private:
-    int x_;
-    int y_;
+    int m_X;
+    int m_Y;
 
   public:
     Position(int x, int y);
-    Position() : x_(0), y_(0){};
+    Position() : m_X(0), m_Y(0){};
 
     int x() const
     {
-        return x_;
+        return m_X;
     };
     void x(int x)
     {
-        x_ = x;
+        m_X = x;
     };
     int y() const
     {
-        return y_;
+        return m_Y;
     };
     void y(int y)
     {
-        y_ = y;
+        m_Y = y;
     };
 
     operator std::string();

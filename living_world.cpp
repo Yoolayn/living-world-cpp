@@ -1,9 +1,9 @@
-#include "dandelion.hpp"
+#include "fern.hpp"
 #include "grass.hpp"
 #include "historian.hpp"
 #include "position.hpp"
 #include "sheep.hpp"
-#include "todo.hpp"
+#include "macros.hpp"
 #include "wolf.hpp"
 #include "world.hpp"
 #include <memory>
@@ -18,10 +18,10 @@ int main()
     world += std::make_unique<Grass>(Position{2, 1});
     world += std::make_unique<Grass>(Position{2, 2});
 
-    world += std::make_unique<Dandelion>(Position{5, 1});
-    world += std::make_unique<Dandelion>(Position{5, 2});
-    world += std::make_unique<Dandelion>(Position{6, 1});
-    world += std::make_unique<Dandelion>(Position{6, 2});
+    world += std::make_unique<Fern>(Position{5, 1});
+    world += std::make_unique<Fern>(Position{5, 2});
+    world += std::make_unique<Fern>(Position{6, 1});
+    world += std::make_unique<Fern>(Position{6, 2});
 
     world += std::make_unique<Wolf>(3, Position{1, 5});
     world += std::make_unique<Wolf>(3, Position{2, 5});

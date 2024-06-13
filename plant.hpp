@@ -12,4 +12,5 @@ class Plant : public Organism
     std::optional<std::unique_ptr<Organism>> clone() override;
     void move(Position p) override;
     void move(int x, int y) override;
+    Action act(Organism &o) override;
 };

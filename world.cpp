@@ -1,7 +1,7 @@
 #include "world.hpp"
+#include "macros.hpp"
 #include "organism.hpp"
 #include "position.hpp"
-#include "todo.hpp"
 #include <cstddef>
 #include <iostream>
 #include <optional>
@@ -73,8 +73,11 @@ void World::makeTurn()
         if (auto new_org = getOrganismFromPosition(pos)) {
             if (std::find_if(m_Organisms.begin(), m_Organisms.end(),
                              [org](const std::unique_ptr<Organism> &x) { return x.get() == org; })
-                != m_Organisms.end())
-                if (action(org, *new_org)) continue;
+                != m_Organisms.end()) {
+                Action a = org->act(**new_org);
+                action(a, *org, *new_org);
+                if (a == Action::die) continue;
+            }
             org->move(pos);
         } else {
             org->move(pos);
@@ -83,27 +86,27 @@ void World::makeTurn()
     m_Turn++;
 }
 
-bool World::action(Organism *org, Organism *new_org)
+bool World::action(Action a, Organism &org, Organism *new_org)
 {
-    switch (org->act(*new_org)) {
+    switch (a) {
     case Action::breed: {
-        auto child = *org + new_org;
+        auto child = org + new_org;
         if (!child) return true;
-        auto free_positions = getVectorOfPositionsAround(org->position(), true, org->range());
+        auto free_positions = getVectorOfPositionsAround(org.position(), true, org.range());
         (*child)->move(free_positions[rand() & free_positions.size()]);
         *this += std::move(*child);
         return true;
     } break;
     case Action::clone: {
-        auto child = org->clone();
+        auto child = org.clone();
         if (!child) return true;
-        auto free_positions = getVectorOfPositionsAround(org->position(), true, org->range());
+        auto free_positions = getVectorOfPositionsAround(org.position(), true, org.range());
         (*child)->move(free_positions[rand() & free_positions.size()]);
         *this += std::move(*child);
         return true;
     } break;
     case Action::die:
-        *this -= org;
+        *this -= &org;
         TODO("report death");
         return false;
         break;
@@ -113,7 +116,7 @@ bool World::action(Organism *org, Organism *new_org)
         return true;
         break;
     case Action::eat:
-        TODO("nom nom");
+        LOG("eating");
         *this -= new_org;
         return true;
         TODO("report death");

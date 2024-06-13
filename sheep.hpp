@@ -9,6 +9,6 @@ class Sheep : public Animal
     Sheep();
     Sheep(Position p);
 
-    Action act(Organism o);
+    Action act(Organism &o);
     std::optional<Organism> operator+(Sheep s);
 };

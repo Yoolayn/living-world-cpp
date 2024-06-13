@@ -23,8 +23,8 @@ std::string species_to_string(const Species &s)
     case Species::sheep:
         return "S";
         break;
-    case Species::dandelion:
-        return "D";
+    case Species::fern:
+        return "F";
         break;
     }
 }
@@ -57,19 +57,9 @@ void Organism::move(int x, int y)
 
 Organism::~Organism(){};
 
-Action Organism::act(Organism o)
+Action Organism::act(Organism &)
 {
-    switch (o.species()) {
-    case Species::plant:
-    case Species::animal:
-    case Species::organism:
-    case Species::grass:
-    case Species::wolf:
-    case Species::sheep:
-    case Species::dandelion:
-        break;
-    }
-    return Action::breed;
+    return Action::nothing;
 }
 
 std::ostream &operator<<(std::ostream &os, Organism &o)
@@ -77,9 +67,8 @@ std::ostream &operator<<(std::ostream &os, Organism &o)
     return os << (std::string)o;
 }
 
-std::optional<std::unique_ptr<Organism>> Organism::operator+(Organism *o)
+std::optional<std::unique_ptr<Organism>> Organism::operator+(Organism *)
 {
-    (void)o;
     return std::nullopt;
 }
 

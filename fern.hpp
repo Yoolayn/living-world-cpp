@@ -1,11 +1,11 @@
 #include "plant.hpp"
 #include <memory>
 
-class Dandelion : public Plant
+class Fern : public Plant
 {
   public:
-    Dandelion();
-    Dandelion(Position position);
+    Fern();
+    Fern(Position position);
 
     std::optional<std::unique_ptr<Organism>> clone() override;
 };
