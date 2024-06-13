@@ -15,7 +15,7 @@ int main()
     World world{10, 10};
     Historian historian{};
 
-    std::unique_ptr<Organism> organisms[24] = {
+    std::unique_ptr<Organism> organisms[16] = {
         // grasses
         std::make_unique<Grass>(Position{1, 1}),
         std::make_unique<Grass>(Position{1, 2}),
@@ -33,20 +33,12 @@ int main()
         std::make_unique<Wolf>(3, Position{2, 5}),
         std::make_unique<Wolf>(3, Position{1, 6}),
         std::make_unique<Wolf>(3, Position{2, 6}),
-        std::make_unique<Wolf>(3, Position{3, 7}),
-        std::make_unique<Wolf>(3, Position{4, 7}),
-        std::make_unique<Wolf>(3, Position{3, 8}),
-        std::make_unique<Wolf>(3, Position{4, 8}),
 
         // Sheep
         std::make_unique<Sheep>(Position{5, 5}),
         std::make_unique<Sheep>(Position{5, 6}),
         std::make_unique<Sheep>(Position{6, 5}),
         std::make_unique<Sheep>(Position{6, 6}),
-        std::make_unique<Sheep>(Position{7, 7}),
-        std::make_unique<Sheep>(Position{7, 8}),
-        std::make_unique<Sheep>(Position{8, 8}),
-        std::make_unique<Sheep>(Position{8, 9}),
     };
 
     for (auto &x : organisms)
