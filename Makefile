@@ -1,5 +1,5 @@
 CXX = clang++
-CXXFLAGS = -std=c++23 -Wall -Wextra -Werror -pedantic -Wno-writable-strings
+CXXFLAGS = -std=c++17 -Wall -Wextra -Werror -pedantic -Wno-writable-strings
 BUILD ?= debug
 MAKEFLAGS := --jobs=$(shell nproc)
 

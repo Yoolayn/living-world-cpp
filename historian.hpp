@@ -1,20 +1,21 @@
 #include "record.hpp"
+#include <memory>
 #include <optional>
-#include <ostream>
 #include <vector>
 
 class Historian
 {
   private:
-    std::vector<Record> m_Records;
+    std::vector<std::shared_ptr<Record>> m_Records;
 
   public:
     Historian() : m_Records(){};
-    std::optional<Record> operator[](size_t index); // get a record
+    std::optional<std::shared_ptr<Record>> operator[](size_t index); // get a record
 
-    void updateRecord(int index, Record record);
-    int operator+=(Record record); // add a record
-    operator std::string();
+    void updateRecord(size_t index, std::shared_ptr<Record> record);
+    size_t operator+=(std::shared_ptr<Record> record); // add a record
+    std::vector<std::shared_ptr<Record>>& records()
+    {
+        return m_Records;
+    }
 };
-
-std::ostream &operator<<(std::ostream &os, Historian h);

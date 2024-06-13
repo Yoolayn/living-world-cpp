@@ -2,6 +2,7 @@
 #include "actions.hpp"
 #include "position.hpp"
 #include <memory>
+#include <optional>
 #include <ostream>
 #include <string>
 
@@ -13,6 +14,7 @@ std::string species_to_string(const Species &s);
 class Organism
 {
   protected:
+    size_t m_Index;
     int m_Power;
     int m_Range;
     Position m_Position;
@@ -48,6 +50,14 @@ class Organism
     int range() const
     {
         return m_Range;
+    }
+    size_t index()
+    {
+        return m_Index;
+    }
+    void index(size_t x)
+    {
+        m_Index = x;
     }
 
     operator std::string();

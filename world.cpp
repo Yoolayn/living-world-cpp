@@ -6,7 +6,7 @@
 #include <iostream>
 #include <optional>
 
-World::World(int worldX, int worldY) : m_WorldX(worldX), m_WorldY(worldY), m_Turn(0), m_Organisms(){};
+World::World(int worldX, int worldY) : m_WorldX(worldX), m_WorldY(worldY), m_Turn(0), m_Organisms(), m_Sig() {};
 
 std::optional<Organism *> World::getOrganismFromPosition(Position target)
 {
@@ -25,7 +25,12 @@ bool World::isPositionFree(Position position)
     return !(bool)this->getOrganismFromPosition(position);
 }
 
-void World::operator+=(std::unique_ptr<Organism> organism)
+void World::operator+=(std::unique_ptr<Organism> &organism)
+{
+    m_Organisms.push_back(std::move(organism));
+}
+
+void World::operator+=(std::unique_ptr<Organism> &&organism)
 {
     m_Organisms.push_back(std::move(organism));
 }
@@ -92,6 +97,8 @@ bool World::action(Action a, Organism &org, Organism *new_org)
     case Action::breed: {
         auto child = org + new_org;
         if (!child) return true;
+        LOG("breeding");
+        getRegisterFunc()(*child->get());
         auto free_positions = getVectorOfPositionsAround(org.position(), true, org.range());
         (*child)->move(free_positions[rand() & free_positions.size()]);
         *this += std::move(*child);
@@ -100,26 +107,30 @@ bool World::action(Action a, Organism &org, Organism *new_org)
     case Action::clone: {
         auto child = org.clone();
         if (!child) return true;
+        LOG("cloning");
+        getRegisterFunc()(*child->get());
         auto free_positions = getVectorOfPositionsAround(org.position(), true, org.range());
         (*child)->move(free_positions[rand() & free_positions.size()]);
         *this += std::move(*child);
         return true;
     } break;
     case Action::die:
+        LOG("dying");
+        sig(org.index());
         *this -= &org;
-        TODO("report death");
         return false;
         break;
     case Action::kill:
+        LOG("killing");
+        sig(new_org->index());
         *this -= new_org;
-        TODO("report death");
         return true;
         break;
     case Action::eat:
         LOG("eating");
+        sig(new_org->index());
         *this -= new_org;
         return true;
-        TODO("report death");
         break;
     default:
         return true;
