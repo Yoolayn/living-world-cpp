@@ -1,6 +1,6 @@
 #include "record.hpp"
 
-Record::Record(int birth, int death, std::vector<int> ancestors)
+Record::Record(int birth, std::optional<int> death, std::vector<size_t> ancestors)
     : m_Birth(birth), m_Death(death), m_Ancestors(ancestors){};
 
 Record::operator std::string()
@@ -11,7 +11,7 @@ Record::operator std::string()
     return "date of birth: " + std::to_string(m_Birth) + ", date of death: " + d_str;
 }
 
-void Record::operator+=(const int &rhs)
+void Record::operator+=(size_t rhs)
 {
     m_Ancestors.push_back(rhs);
 }

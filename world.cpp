@@ -98,7 +98,7 @@ bool World::action(Action a, Organism &org, Organism &new_org)
         auto child = org + new_org;
         if (!child) return true;
         LOG("breeding");
-        getRegisterFunc()(*child->get());
+        getRegisterFuncBreed()(*child->get(), org, new_org);
         auto free_positions = getVectorOfPositionsAround(org.position(), true, org.range());
         (*child)->move(free_positions[rand() & free_positions.size()]);
         *this += std::move(*child);
@@ -108,7 +108,7 @@ bool World::action(Action a, Organism &org, Organism &new_org)
         auto child = org.clone();
         if (!child) return true;
         LOG("cloning");
-        getRegisterFunc()(*child->get());
+        getRegisterFuncClone()(*child->get(), org);
         auto free_positions = getVectorOfPositionsAround(org.position(), true, org.range());
         (*child)->move(free_positions[rand() & free_positions.size()]);
         *this += std::move(*child);

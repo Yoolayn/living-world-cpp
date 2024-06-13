@@ -51,8 +51,17 @@ int main()
         (*historian[x])->death(world.turn());
     };
 
-    world.newRegisterFunc([&historian, &world](Organism& o){
-        o.index(historian += std::make_shared<Record>(world.turn()));
+    world.newRegisterFuncClone([&historian, &world](Organism& o, Organism& p){
+        auto r = std::make_shared<Record>(world.turn());
+        *r.get() += p.index();
+        o.index(historian += r);
+    });
+
+    world.newRegisterFuncBreed([&historian, &world](Organism& o, Organism& p1, Organism& p2){
+        auto r = std::make_shared<Record>(world.turn());
+        *r.get() += p1.index();
+        *r.get() += p2.index();
+        o.index(historian += r);
     });
 
     for (int x = 0; x < 10; ++x)

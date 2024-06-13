@@ -8,14 +8,14 @@ class Record
   private:
     int m_Birth;
     std::optional<int> m_Death;
-    std::vector<int> m_Ancestors;
+    std::vector<size_t> m_Ancestors;
 
   public:
-    Record() : Record(0, 0, {}){};
-    Record(int birth) : Record(birth, 0, {}){};
-    Record(int birth, int death) : Record(birth, death, {}){};
-    Record(int birth, std::vector<int> ancestors) : Record(birth, 0, ancestors){};
-    Record(int birth, int death, std::vector<int> ancestors);
+    Record() : Record(0, std::optional<int>(), {}){};
+    Record(int birth) : Record(birth, std::optional<int>(), {}){};
+    Record(int birth, std::optional<int> death) : Record(birth, death, {}){};
+    Record(int birth, std::vector<size_t> ancestors) : Record(birth, std::optional<int>(), ancestors){};
+    Record(int birth, std::optional<int> death, std::vector<size_t> ancestors);
 
     operator std::string();
 
@@ -31,12 +31,12 @@ class Record
     {
         return m_Death;
     };
-    std::vector<int> ancestors()
+    std::vector<size_t> ancestors()
     {
         return m_Ancestors;
     };
 
-    void operator+=(const int &b); // add ancestors
+    void operator+=(size_t b); // add ancestors
 };
 
 std::ostream &operator<<(std::ostream &os, Record &r);

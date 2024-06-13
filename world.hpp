@@ -17,7 +17,8 @@ class World
     std::vector<std::unique_ptr<Organism>> m_Organisms;
     char separator = '.';
     Signal m_Sig;
-    std::function<void(Organism&)> m_RegisterOrganism;
+    std::function<void(Organism&, Organism&)> m_RegisterOrganismClone;
+    std::function<void(Organism&, Organism&, Organism&)> m_RegisterOrganismBreed;
 
     std::optional<Organism *> getOrganismFromPosition(Position position);
     bool isPositionOnWorld(Position position);
@@ -51,13 +52,21 @@ class World
     {
         return m_Organisms;
     }
-    void newRegisterFunc(std::function<void(Organism&)> func)
+    void newRegisterFuncBreed(std::function<void(Organism&, Organism&, Organism&)> func)
     {
-        m_RegisterOrganism = func;
+        m_RegisterOrganismBreed = func;
     }
-    std::function<void(Organism&)> getRegisterFunc() const
+    void newRegisterFuncClone(std::function<void(Organism&, Organism&)> func)
     {
-        return m_RegisterOrganism;
+        m_RegisterOrganismClone = func;
+    }
+    std::function<void(Organism&, Organism&)> getRegisterFuncClone() const
+    {
+        return m_RegisterOrganismClone;
+    }
+    std::function<void(Organism&, Organism&, Organism&)> getRegisterFuncBreed() const
+    {
+        return m_RegisterOrganismBreed;
     }
 
     void operator+=(std::function<void(size_t)> &&func)
