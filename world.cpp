@@ -35,10 +35,10 @@ void World::operator+=(std::unique_ptr<Organism> &&organism)
     m_Organisms.push_back(std::move(organism));
 }
 
-void World::operator-=(Organism *organism)
+void World::operator-=(Organism &organism)
 {
     auto it = std::find_if(m_Organisms.begin(), m_Organisms.end(),
-                           [organism](const std::unique_ptr<Organism> &x) { return x.get() == organism; });
+                           [organism](const std::unique_ptr<Organism> &x) { return x.get() == &organism; });
     if (it != m_Organisms.end()) m_Organisms.erase(it);
 }
 
@@ -80,7 +80,7 @@ void World::makeTurn()
                              [org](const std::unique_ptr<Organism> &x) { return x.get() == org; })
                 != m_Organisms.end()) {
                 Action a = org->act(**new_org);
-                action(a, *org, *new_org);
+                action(a, *org, **new_org);
                 if (a == Action::die) continue;
             }
             org->move(pos);
@@ -91,7 +91,7 @@ void World::makeTurn()
     m_Turn++;
 }
 
-bool World::action(Action a, Organism &org, Organism *new_org)
+bool World::action(Action a, Organism &org, Organism &new_org)
 {
     switch (a) {
     case Action::breed: {
@@ -117,18 +117,18 @@ bool World::action(Action a, Organism &org, Organism *new_org)
     case Action::die:
         LOG("dying");
         sig(org.index());
-        *this -= &org;
+        *this -= org;
         return false;
         break;
     case Action::kill:
         LOG("killing");
-        sig(new_org->index());
+        sig(new_org.index());
         *this -= new_org;
         return true;
         break;
     case Action::eat:
         LOG("eating");
-        sig(new_org->index());
+        sig(new_org.index());
         *this -= new_org;
         return true;
         break;

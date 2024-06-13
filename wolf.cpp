@@ -1,5 +1,6 @@
 #include "wolf.hpp"
 #include "organism.hpp"
+#include <memory>
 
 Wolf::Wolf() : Animal()
 {
@@ -28,7 +29,7 @@ Action Wolf::act(Organism &o)
     }
 }
 
-std::optional<Organism> Wolf::operator+(Organism o)
+std::optional<std::unique_ptr<Organism>> Wolf::operator+(Organism &o)
 {
-    return Wolf{m_Power + o.power() / 2};
+    return std::make_unique<Wolf>(m_Power + o.power() / 2);
 }

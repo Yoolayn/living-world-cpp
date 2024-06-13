@@ -71,12 +71,12 @@ class World
 
     std::vector<Position> getVectorOfPositionsAround(Position position, bool free, int range);
     void makeTurn();
-    bool action(Action a, Organism &org, Organism *new_org);
+    bool action(Action a, Organism &org, Organism &new_org);
 
     void operator()();
     void operator+=(std::unique_ptr<Organism> &organism);
     void operator+=(std::unique_ptr<Organism> &&organism);
-    void operator-=(Organism *organism);
+    void operator-=(Organism &organism);
 
     void writeWorld(std::string filename);
     void readWorld(std::string filename);

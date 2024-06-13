@@ -64,7 +64,7 @@ class Organism
     bool operator==(Species s);
     bool operator==(Organism o);
 
-    virtual std::optional<std::unique_ptr<Organism>> operator+(Organism *o);
+    virtual std::optional<std::unique_ptr<Organism>> operator+(Organism &o);
     virtual std::optional<std::unique_ptr<Organism>> clone();
     virtual Action act(Organism &o);
     virtual void move(int x, int y);

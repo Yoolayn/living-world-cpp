@@ -67,7 +67,7 @@ std::ostream &operator<<(std::ostream &os, Organism &o)
     return os << (std::string)o;
 }
 
-std::optional<std::unique_ptr<Organism>> Organism::operator+(Organism *)
+std::optional<std::unique_ptr<Organism>> Organism::operator+(Organism &)
 {
     return std::nullopt;
 }

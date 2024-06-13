@@ -32,7 +32,7 @@ Action Animal::act(Organism &o)
     return Action::breed;
 }
 
-std::optional<std::unique_ptr<Organism>> Animal::operator+(Organism *)
+std::optional<std::unique_ptr<Organism>> Animal::operator+(Organism &)
 {
     return std::nullopt;
 }

@@ -63,7 +63,7 @@ int main()
         o.index(historian += std::make_shared<Record>(world.turn()));
     });
 
-    for (int x = 0; x < 50; ++x)
+    for (int x = 0; x < 10; ++x)
         world();
 
     for (auto x : historian.records())
